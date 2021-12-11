@@ -2,17 +2,17 @@ create table MATCH_LINEUPS(
     match_id int unsigned not null,
     home_player_id int unsigned not null,
     away_player_id int unsigned not null,
-	foreign key(match_id) references MATCH_INFO(match_id),
-    foreign key(home_player_id) references PLAYER_INFO(player_id),
-    foreign key(away_player_id) references PLAYER_INFO(player_id)
+    foreign key(match_id) references MATCH_INFO(match_id),
+    foreign key(home_player_id) references PLAYER(player_id),
+    foreign key(away_player_id) references PLAYER(player_id)
 );
 create table MATCH_SUB(
 	match_id int unsigned not null, 
     home_player_id int unsigned not null,
     away_player_id int unsigned not null,
 	foreign key(match_id) references MATCH_INFO(match_id),
-	foreign key(home_player_id) references PLAYER_INFO(player_id),
-    foreign key(away_player_id) references PLAYER_INFO(player_id)
+	foreign key(home_player_id) references PLAYER(player_id),
+    foreign key(away_player_id) references PLAYER(player_id)
 );
 create table IN_OUT(
     match_id int unsigned not null, 
@@ -21,7 +21,7 @@ create table IN_OUT(
     player_id int unsigned not null,
     club_id int unsigned not null,
     foreign key(match_id) references MATCH_INFO(match_id),
-    foreign key(player_id) references PLAYER_INFO(player_id),
+    foreign key(player_id) references PLAYER(player_id),
     foreign key(club_id) references CLUB_INFO(club_id)
 );
 create table MATCH_DETAILS(
@@ -36,7 +36,7 @@ create table MATCH_DETAILS(
     away_shots int unsigned not null, 
     King_of_the_match int unsigned not null,	
     foreign key(match_id) references MATCH_INFO(match_id),
-    foreign key(King_of_the_match) references PLAYER_INFO(player_id)
+    foreign key(King_of_the_match) references PLAYER(player_id)
 )
 
 
