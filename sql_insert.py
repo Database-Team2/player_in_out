@@ -14,11 +14,11 @@ conn=pymysql.connect(
     charset = "utf8"
 )
 
-sql_match_lineup = "insert into match_lineups(match_id, home_team_id,away_team_id,home_lineups,away_lineups) values(%s,%s,%s,%s,%s)"
-sql_match_sub="insert into match_sub(match_id, home_team_id,away_team_id,home_sub,away_sub) values(%s,%s,%s,%s,%s)"
-sql_match_inout="insert into in_out(match_id,in_out,time,player_id,club_id) values(%s,%s,%s,%s,%s)"
-sql_players="insert into player(Player_id,Club_id,Player_name,Uniform_num,Date_of_birth,position) values(%s,%s,%s,%s,%s,%s)"
-sql_match_details='insert into match_detail(match_id,home_score,away_score,home_possesion,away_possesion,home_shots_on_target,away_shots_on_target,home_shots,away_shots,King_of_the_match) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+sql_match_lineup = "insert into MATCH_LINEUPS(match_id, player_id) values(%s,%s)"
+sql_match_sub="insert into MATCH_SUB(match_id, home_team_id,away_team_id,home_sub,away_sub) values(%s,%s,%s,%s,%s)"
+sql_match_inout="insert into IN_OUT(match_id,in_out,time,player_id,club_id) values(%s,%s,%s,%s,%s)"
+sql_players="insert into PLAYER(Player_id,Club_id,Player_name,Uniform_num,Date_of_birth,position) values(%s,%s,%s,%s,%s,%s)"
+sql_match_details='insert into MATCH_DETAIL(match_id,home_score,away_score,home_possesion,away_possesion,home_shots_on_target,away_shots_on_target,home_shots,away_shots,King_of_the_match) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
 
 
 temp=[]
@@ -27,12 +27,13 @@ curs=conn.cursor()
 def insert_lineup():
     for i in range(len(json_data["match_lineup"])):
         for j in range(len(json_data["match_lineup"][i]["Home_lineups"])):
-            curs.execute(sql_match_lineup , (json_data["match_lineup"][i]["match_id"],
-                        json_data["match_lineup"][i]["Home_team"],
-                        json_data["match_lineup"][i]["Away_team"],
-                        json_data["match_lineup"][i]["Home_lineups"][j],
-                        json_data["match_lineup"][i]["Away_lineups"][j],
+            curs.execute(sql_match_lineup ,(json_data["match_lineup"][i]["match_id"],
+                        json_data["match_lineup"][i]["Home_lineups"][j]
                         ))
+        for j in range(len(json_data["match_lineup"][i]["Away_lineups"])):   
+             curs.execute(sql_match_lineup ,(json_data["match_lineup"][i]["match_id"],
+                        json_data["match_lineup"][i]["Home_lineups"][j]
+                        ))        
 
 def insert_match_sub():
     for i in range(len(json_data["match_lineup"])):
